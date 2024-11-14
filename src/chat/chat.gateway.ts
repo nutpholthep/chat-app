@@ -7,6 +7,7 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
 } from '@nestjs/websockets';
+import { log } from 'console';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({ cors: true })
@@ -44,7 +45,11 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       this.server.to(targetSocketId).emit('receiveMessage', {
         from: client.id,
         message: data.message,
+        time: Date().toString()
       });
     }
+    console.log('users',this.users)
+    console.log('TargetId',targetSocketId)
+    console.log('Time',Date().toString())
   }
 }
